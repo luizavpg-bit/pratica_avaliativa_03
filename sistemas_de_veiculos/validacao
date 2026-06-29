@@ -1,0 +1,24 @@
+package sistema_de_veiculos;
+ 
+public class validacao {
+ 
+    public static void validarModelo(String modelo) {
+        if (modelo == null || modelo.trim().isEmpty())
+            throw new IllegalArgumentException("Modelo não pode ser vazio ou nulo!");
+    }
+ 
+    public static void validarAceleracao(int valor) {
+        if (valor <= 0)
+            throw new IllegalArgumentException("O valor de aceleração deve ser maior que zero!");
+    }
+ 
+    public static void validarNivelBateria(int nivelBateria) {
+        if (nivelBateria < 0 || nivelBateria > 100)
+            throw new IllegalArgumentException("O nível de bateria deve estar entre 0 e 100!");
+    }
+ 
+    public static void validarBateriaInsuficiente(int consumo, int nivelBateria) {
+        if (consumo > nivelBateria)
+            throw new IllegalArgumentException("Bateria insuficiente para acelerar!");
+    }
+}
