@@ -1,0 +1,78 @@
+package sistema_de_veiculos;
+
+public class TestaCarros {
+
+    public static void main(String[] args) {
+        carroeletricoValido();
+        aceleracaoValida();
+        aceleracaoInvalida();
+        bateriaInsuficiente();
+        nivelBateriaNegativo();
+        nivelBateriaAcimaDe100();
+    }
+
+    static Carroeletrico criarCarroeletrico(String modelo, int velocidade, int bateria, int aceleracao) {
+        Carroeletrico carro = new Carroeletrico(modelo, velocidade, bateria);
+        carro.acelerar(aceleracao);
+        return carro;
+    }
+
+    static void carroeletricoValido() {
+        System.out.println("\n>>> Caso 1: Carro elétrico válido");
+        try {
+            Carroeletrico carro = criarCarroeletrico("Tesla Model 3", 0, 20, 30);
+            carro.visualizar();
+        } catch (Exception e) {
+            System.err.println("Erro: " + e.getMessage());
+        }
+    }
+
+    static void aceleracaoValida() {
+        System.out.println("\n>>> Caso 2: Aceleração válida");
+        try {
+            Carroeletrico carro = new Carroeletrico("Kwid E-Tech", 0, 80);
+            carro.acelerar(40);
+            carro.visualizar();
+        } catch (Exception e) {
+            System.err.println("Erro: " + e.getMessage());
+        }
+    }
+
+    static void aceleracaoInvalida() {
+        System.out.println("\n>>> Caso 3: Aceleração com valor inválido");
+        try {
+            Carroeletrico carro = new Carroeletrico("Kwid E-Tech", 0, 80);
+            carro.acelerar(-10); // aceleração inválida: negativa
+        } catch (IllegalArgumentException e) {
+            System.err.println("Erro: " + e.getMessage());
+        }
+    }
+
+    static void bateriaInsuficiente() {
+        System.out.println("\n>>> Caso 4: Bateria insuficiente");
+        try {
+            Carroeletrico carro = new Carroeletrico("Tesla Model 3", 0, 5);
+            carro.acelerar(100); // consumo seria 50, mas bateria só tem 5%
+        } catch (IllegalArgumentException e) {
+            System.err.println("Erro: " + e.getMessage());
+        }
+    }
+
+    static void nivelBateriaNegativo() {
+        System.out.println("\n>>> Caso 5: Nível de bateria negativo");
+        try {
+            new Carroeletrico("Audi", 0, -10); // bateria inválida: negativa
+        } catch (IllegalArgumentException e) {
+            System.err.println("Erro: " + e.getMessage());
+        }
+    }
+
+    static void nivelBateriaAcimaDe100() {
+        System.out.println("\n>>> Caso 6: Nível de bateria acima de 100%");
+        try {
+            new Carroeletrico("Audi", 0, 150); // bateria inválida: acima de 100
+        } catch (IllegalArgumentException e) {
+            System.err.println("Erro: " + e.getMessage());
+        }
+    }
+}
