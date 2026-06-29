@@ -1,49 +1,40 @@
 package sistema_de_veiculos;
 
-public class TestaCarros {
+public class Carro {
 
-    public static void main(String[] args) {
-        carroeletricoValido();
-        aceleracaoValida();
-        aceleracaoInvalida();
-        bateriaInsuficiente();
-        nivelBateriaNegativo();
-        nivelBateriaAcimaDe100();
+    private String modelo;
+    private int velocidade;
+
+    public Carro(String modelo, int velocidade) {
+        validacao.validarModelo(modelo);
+        this.modelo = modelo;
+        this.velocidade = velocidade;
     }
 
-    static Carroeletrico criarCarroeletrico(String modelo, int velocidade, int bateria, int aceleracao) {
-        Carroeletrico carro = new Carroeletrico(modelo, velocidade, bateria);
-        carro.acelerar(aceleracao);
-        return carro;
+    public String getModelo() {
+        return modelo;
     }
 
-    static void carroeletricoValido() {
-        System.out.println("\n>>> Caso 1: Carro elétrico válido");
-        try {
-            Carroeletrico carro = criarCarroeletrico("Tesla Model 3", 0, 20, 30);
-            carro.visualizar();
-        } catch (Exception e) {
-            System.err.println("Erro: " + e.getMessage());
-        }
+    public void setModelo(String modelo) {
+        validacao.validarModelo(modelo);
+        this.modelo = modelo;
     }
 
-    static void aceleracaoValida() {
-        System.out.println("\n>>> Caso 2: Aceleração válida");
-        try {
-            Carroeletrico carro = new Carroeletrico("BMW i3", 0, 80);
-            carro.acelerar(40);
-            carro.visualizar();
-        } catch (Exception e) {
-            System.err.println("Erro: " + e.getMessage());
-        }
+    public int getVelocidade() {
+        return velocidade;
     }
 
-    static void aceleracaoInvalida() {
-        System.out.println("\n>>> Caso 3: Aceleração com valor inválido");
-        try {
-            Carroeletrico carro = new Carroeletrico("BMW i3", 0, 80);
-            carro.acelerar(-10); // aceleração inválida: negativa
-        } catch (IllegalArgumentException e) {
-            System.err.println("Erro: " + e.getMessage());
-        }
+    public void setVelocidade(int velocidade) {
+        this.velocidade = velocidade;
     }
+
+    public void acelerar(int valor) {
+        validacao.validarAceleracao(valor);
+        this.velocidade += valor;
+    }
+
+    public void visualizar() {
+        System.out.println("Modelo: " + this.modelo);
+        System.out.println("Velocidade atual: " + this.velocidade + " km/h");
+    }
+}
