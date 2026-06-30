@@ -1,0 +1,14 @@
+package notifcacoes;
+
+public class NotificacaoSms extends notifcacao {
+
+    public NotificacaoSms(String telefone) {
+        super(telefone);
+    }
+
+    @Override
+    public void enviar(String mensagem) {
+        Validacao.validarMensagem(mensagem);
+        System.out.println("Enviando SMS para " + getDestinatario() + " - Mensagem: " + mensagem);
+    }
+}
