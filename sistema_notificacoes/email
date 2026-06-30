@@ -1,0 +1,14 @@
+package notifcacoes;
+
+public class NotifcacaoEmail extends notifcacao {
+	 
+    public NotifcacaoEmail(String email) {
+        super(email);
+    }
+ 
+    @Override
+    public void enviar(String mensagem) {
+        Validacao.validarMensagem(mensagem);
+        System.out.println("Enviando Email para " + getDestinatario() + " - Mensagem: " + mensagem);
+    }
+}
