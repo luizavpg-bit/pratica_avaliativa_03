@@ -1,0 +1,70 @@
+package notifcacoes;
+
+public class testaNotificacao {
+
+    public static void main(String[] args) {
+        emailValido();
+        smsValido();
+        mensagemVazia();
+        destinatarioVazio();
+        tipoInexistente();
+    }
+
+    static notifcacao criarNotificacao(String tipo, String destinatario) {
+        if (tipo.equalsIgnoreCase("Email")) {
+            return new NotifcacaoEmail(destinatario);
+        } else if (tipo.equalsIgnoreCase("SMS")) {
+            return new NotificacaoSms(destinatario);
+        } else {
+            throw new IllegalArgumentException("Tipo inválido! Use Email ou SMS.");
+        }
+    }
+
+    static void emailValido() {
+        System.out.println("\n Caso 1: Email válido");
+        try {
+            notifcacao n = criarNotificacao("Email", "ana@email.com");
+            n.enviar("Bem-vindo ao sistema");
+        } catch (Exception e) {
+            System.err.println("Erro: " + e.getMessage());
+        }
+    }
+
+    static void smsValido() {
+        System.out.println("\n Caso 2: SMS válido");
+        try {
+            notifcacao n = criarNotificacao("SMS", "(11) 98888-7777");
+            n.enviar("Seu código é 1234");
+        } catch (Exception e) {
+            System.err.println("Erro: " + e.getMessage());
+        }
+    }
+
+    static void mensagemVazia() {
+        System.out.println("\n Caso 3: Mensagem vazia");
+        try {
+            notifcacao n = criarNotificacao("Email", "ana@email.com");
+            n.enviar(""); // mensagem inválida: vazia
+        } catch (IllegalArgumentException e) {
+            System.err.println("Erro: " + e.getMessage());
+        }
+    }
+
+    static void destinatarioVazio() {
+        System.out.println("\n Caso 4: Destinatário vazio");
+        try {
+            criarNotificacao("SMS", ""); // destinatário inválido: vazio
+        } catch (IllegalArgumentException e) {
+            System.err.println("Erro: " + e.getMessage());
+        }
+    }
+
+    static void tipoInexistente() {
+        System.out.println("\n Caso 5: Tipo inexistente");
+        try {
+            criarNotificacao("Push", "ana@email.com"); // tipo inválido
+        } catch (IllegalArgumentException e) {
+            System.err.println("Erro: " + e.getMessage());
+        }
+    }
+}
